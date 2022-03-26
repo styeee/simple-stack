@@ -8,26 +8,50 @@ class stack
         type value;
         node*prev;
     };
-    node*self=0;
+protected:
+    node*self;
+    size_t count=0;
 public:
-    void push(const type i)
+    stack(const stack&s):self(s.self),count(s.count){}
+    stack(){}
+
+    ~stack()
+    {while(self)pop();}
+
+    stack&push(const type i)
     {
         self=new node{i,self};
+        count++;
+        return*this;
     }
 
     const type pop()
     {
-        if(!self)return 0;
+        if(!count)return 0;
         node*p=self->prev;
         const type v=self->value;
         delete self;
         self=p;
+        count--;
         return v;
     }
 
-    inline void operator+(const type i)
-    {push(i);}
+    inline stack&operator+(const type i)
+    {return push(i);}
 
     inline const type operator+()
-    {pop();}
+    {return pop();}
+
+    operator type*()
+    {
+        type*p=new type[count];
+        while(count)p[count]=pop();
+        return p;
+    }
+
+    inline const size_t size()const
+    {return count;}
+
+    inline operator size_t()const
+    {return count;}
 };
