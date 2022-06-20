@@ -44,6 +44,7 @@ public:
 
     operator type*()
     {
+        if(!count)return 0;
         type*p=new type[count];
         while(count)p[count]=pop();
         return p;
