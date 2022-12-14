@@ -9,7 +9,7 @@ class stack
         node*prev;
     };
 protected:
-    node*self;
+    node*self=0;
     size_t count=0;
 public:
     stack(const stack&s):self(s.self),count(s.count){}
